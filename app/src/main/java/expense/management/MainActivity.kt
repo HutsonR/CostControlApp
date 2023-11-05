@@ -13,8 +13,6 @@ import expense.management.databinding.ActivityMainBinding
 import expense.management.entities.HistoryItem
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "debugTag"
@@ -86,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                val text = s.toString().trim() // Удаляем пробелы и проверяем наличие текста
+                val text = s.toString().trim()
 
                 addExpButton.isEnabled = text.isNotEmpty()
                 addExpButton.setOnClickListener {
