@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import expense.management.adapter.HistoryAdapter
 import expense.management.databinding.ActivityMainBinding
+import expense.management.db.HistoryItemDao
 import expense.management.entities.HistoryItem
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var database: AppDatabase
     private lateinit var incomeTV: TextView
     private lateinit var expenseTV: TextView
+    private lateinit var currentMoneyTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +52,9 @@ class MainActivity : AppCompatActivity() {
     private fun init() {
         incomeTV = binding.addInc
         expenseTV = binding.addExp
+        currentMoneyTV = binding.currentMoney
+
+        currentMoneyTV.text = SharedPreferencesHelper.getMoney(this).toString() // Восстановление денег
     }
 
     private fun addIncome() {
@@ -69,9 +74,18 @@ class MainActivity : AppCompatActivity() {
                     addHistoryItem("Income", incomeTV.text.toString(), HistoryTypes.INCOME)
                     incomeTV.text = ""
                     addIncButton.isActivated = false
+                    calcIncomeMoney(text.toInt())
                 }
             }
         })
+    }
+    private fun calcIncomeMoney(enterValue: Int) {
+        if (enterValue.toString().isNotEmpty()) {
+            var currentMoneyCount = currentMoneyTV.text.toString().toInt()
+            val calcMoney = currentMoneyCount + enterValue
+            currentMoneyTV.text = calcMoney.toString()
+            SharedPreferencesHelper.setMoney(this, calcMoney)
+        }
     }
 
     private fun addExpense() {
@@ -91,9 +105,18 @@ class MainActivity : AppCompatActivity() {
                     addHistoryItem("Expense", expenseTV.text.toString(), HistoryTypes.EXPENSE)
                     expenseTV.text = ""
                     addExpButton.isActivated = false
+                    calcExpenseMoney(text.toInt())
                 }
             }
         })
+    }
+    private fun calcExpenseMoney(enterValue: Int) {
+        if (enterValue.toString().isNotEmpty()) {
+            var currentMoneyCount = currentMoneyTV.text.toString().toInt()
+            val calcMoney = currentMoneyCount - enterValue
+            currentMoneyTV.text = calcMoney.toString()
+            SharedPreferencesHelper.setMoney(this, calcMoney)
+        }
     }
 
     private fun addHistoryItem(name: String, count: String, types: HistoryTypes) {

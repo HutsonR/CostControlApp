@@ -76,6 +76,30 @@
             android:src="@drawable/ic_add_negative"
             tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textGray"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:text="Total amount:" />
+        <TextView
+            android:id="@+id/currentMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="21sp"
+            android:layout_marginTop="2dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:text="0" />
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleHistory"
         android:layout_marginTop="20dp"
